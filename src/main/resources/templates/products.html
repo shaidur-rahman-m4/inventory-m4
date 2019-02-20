@@ -1,0 +1,108 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title th:text="#{inventory.addProduct.title}">Title</title>
+<span th:substituteby="commons :: common-css"></span>
+</head>
+<body>
+	<a id="baseUrl" th:href="@{/}"></a>
+	<div id="headerbaredit" class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<span class="brand" th:text="#{inventory.brand}">Brand</span>
+				<div class="nav-collapse collapse">
+					<p class="navbar-text span2">Feedback message</p>
+					<ul class="nav pull-right">
+						<li ><a  id="addbtn" th:text="#{action.add}"></a></li>
+					</ul>
+					<form method="GET" action="" class="navbar-search pull-right">
+						<input type="text" autocomplete="off" placeholder="Search" class="typeahead search-query navbarsearch" data-search-settings="navbarsearch"> <input type="hidden" value="" class="typeahead-val">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="container" class="container">
+		<header id="overview" class="subhead">
+			<div class="subnav subnav-fixed" id="subnavscroll">
+				<ul class="nav nav-pills">
+				</ul>
+			</div>
+		</header>
+
+		<form id="mainform" class="form-horizontal" th:object="${product}" autocomplete="off">
+			<section>
+				<div class="row anything noheader">
+					<div class="span6 offset3">
+						<fieldset>
+							<div class="control-group">
+								<label for="name" class="control-label" th:text="#{inventory.name}">Text input:</label>
+								<div class="controls">
+									<input id="name" name="name" th:field="*{name}" type="text" data-required="required" class="input-large include" placeholder="Name" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="price" class="control-label" th:text="#{inventory.price}">Text input:</label>
+								<div class="controls">
+									<input id="price" name="price" th:field="*{price}" type="text" data-required="required" class="input-small include" placeholder="Price" /> <span class="inlineappends">tk.</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="qty" class="control-label" th:text="#{inventory.qty}">Text input:</label>
+								<div class="controls">
+									<input id="qty" name="quantity" th:field="*{quantity}" type="text" data-required="required" class="input-small include" placeholder="Quantity" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="datepicker" class="control-label" th:text="#{inventory.date}">Datepicker:</label>
+								<div class="controls">
+									<div class="input-append">
+										<input id="datepicker" name="date" th:field="*{date}" class="input-datesize include con-datepicker" type="text"><span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</section>
+		</form>
+	</div>
+	<div id="container" class="container">
+		<form id="form-horizontal" class="form-horizontal" autocomplete="off">
+			<div class="row anything noheader">
+				<div class="span12">
+					<table class="table-condensed table table-striped datatabled" id="testmodaltable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Price</th>
+								<th>Available Qty</th>
+								<th>Date</th>
+								<th><button data-target="#testmodaltablerownew" id="testmodaltablerownewbutton" class="btn btn-mini-icon pull-right include" data-toggle="modal">
+										<i class="icon-plus"></i>
+									</button></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="testmodaltablerow1">
+								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
+								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
+								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
+								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
+								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<span th:substituteby="commons :: common-html"></span>
+	<span th:substituteby="commons :: common-js"></span>
+</body>
+</html>
