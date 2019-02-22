@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 
 	$('#addbtn').click(function() {
 		addProduct();
@@ -17,4 +17,4 @@ $(document).ready(function() {
 			}
 		});
 	}
-});
+});*/

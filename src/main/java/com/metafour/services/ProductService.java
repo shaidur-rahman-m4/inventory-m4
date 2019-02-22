@@ -10,8 +10,14 @@ import com.metafour.model.Product;
 public class ProductService {
 	List<Product> products = new ArrayList<>();
 
-	public void addProduct(Product product) {
+	public List<Product>  addProduct(Product product) {
 		product.setId(String.valueOf(new Random().nextLong()));
 		products.add(product);
+		System.out.println(products.toString());
+		return products;
+	}
+
+	public List<Product> findProducts() {
+		return products;
 	}
 }

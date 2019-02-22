@@ -63,6 +63,11 @@
 			<version>3.5.4-Final</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>

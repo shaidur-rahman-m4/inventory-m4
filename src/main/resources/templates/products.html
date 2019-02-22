@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
-<title th:text="#{inventory.addProduct.title}">Title</title>
-<span th:substituteby="commons :: common-css"></span>
+<title th:text="#{product.addProduct.title}">Title</title>
+<span th:replace="commons :: common-css"></span>
 </head>
-<body>
+<body th:with="isNew=${#strings.isEmpty(product.id)}">
 	<a id="baseUrl" th:href="@{/}"></a>
 	<div id="headerbaredit" class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -13,11 +13,17 @@
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<span class="brand" th:text="#{inventory.brand}">Brand</span>
+				<span class="brand" th:text="#{product.brand}">Brand</span>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text span2">Feedback message</p>
-					<ul class="nav pull-right">
-						<li ><a  id="addbtn" th:text="#{action.add}"></a></li>
+					<ul class="nav pull-right" th:if="${isNew}">
+						<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
+					</ul>
+					<ul class="nav pull-right" th:unless="${isNew}">
+						<li><a class="editmode" id="addbutton" th:href="@{'/product'}" th:text="#{action.add}">Add</a></li>
+						<li><a class="editmode" id="updatebutton" th:text="#{action.update}">Update</a></li>
+						<li class="nodisplay"><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.save}">Save</a></li>
+						<li class="nodisplay"><a class="viewmode updatebutton" id="headercancelbutton" th:text="#{action.cancel}">Cancel</a></li>
 					</ul>
 					<form method="GET" action="" class="navbar-search pull-right">
 						<input type="text" autocomplete="off" placeholder="Search" class="typeahead search-query navbarsearch" data-search-settings="navbarsearch"> <input type="hidden" value="" class="typeahead-val">
@@ -33,35 +39,43 @@
 				</ul>
 			</div>
 		</header>
-
-		<form id="mainform" class="form-horizontal" th:object="${product}" autocomplete="off">
-			<section>
+		<form id="mainform" class="form-horizontal" th:object="${product}" autocomplete="off" th:action="@{/product}">
+			<section id="addNewProduct">
+				<div class="page-header sectionbartoggle" tabindex="0">
+					<h1>
+						<small><i class="icon-chevron-down"></i><span>Add new product</span></small>
+					</h1>
+				</div>
 				<div class="row anything noheader">
-					<div class="span6 offset3">
+					<div class="span6">
 						<fieldset>
 							<div class="control-group">
-								<label for="name" class="control-label" th:text="#{inventory.name}">Text input:</label>
+								<label for="name" class="control-label" th:text="#{product.name}">Text input:</label>
 								<div class="controls">
-									<input id="name" name="name" th:field="*{name}" type="text" data-required="required" class="input-large include" placeholder="Name" />
+									<input id="name" name="name" th:field="*{name}" type="text" class="input-large include" placeholder="Name" />
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="price" class="control-label" th:text="#{inventory.price}">Text input:</label>
+								<label for="price" class="control-label" th:text="#{product.price}">Text input:</label>
 								<div class="controls">
-									<input id="price" name="price" th:field="*{price}" type="text" data-required="required" class="input-small include" placeholder="Price" /> <span class="inlineappends">tk.</span>
+									<input id="price" name="price" th:field="*{price}" type="number" class="input-large include" placeholder="Price" /> <span class="inlineappends">tk.</span>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="span6">
+						<fieldset>
+							<div class="control-group">
+								<label for="qty" class="control-label" th:text="#{product.qty}">Text input:</label>
+								<div class="controls">
+									<input id="qty" name="quantity" th:field="*{quantity}" type="number" class="input-large include" placeholder="Quantity" />
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="qty" class="control-label" th:text="#{inventory.qty}">Text input:</label>
-								<div class="controls">
-									<input id="qty" name="quantity" th:field="*{quantity}" type="text" data-required="required" class="input-small include" placeholder="Quantity" />
-								</div>
-							</div>
-							<div class="control-group">
-								<label for="datepicker" class="control-label" th:text="#{inventory.date}">Datepicker:</label>
+								<label for="datepicker" class="control-label" th:text="#{product.date}">Datepicker:</label>
 								<div class="controls">
 									<div class="input-append">
-										<input id="datepicker" name="date" th:field="*{date}" class="input-datesize include con-datepicker" type="text"><span class="add-on"><i class="icon-calendar"></i></span>
+										<input id="datepicker" name="date" th:field="*{date}" class="include input-datesize con-datepicker" type="text"><span class="add-on"><i class="icon-calendar"></i></span>
 									</div>
 								</div>
 							</div>
@@ -69,40 +83,45 @@
 					</div>
 				</div>
 			</section>
+
 		</form>
-	</div>
-	<div id="container" class="container">
-		<form id="form-horizontal" class="form-horizontal" autocomplete="off">
-			<div class="row anything noheader">
+		<section id="productsTable">
+			<div class="page-header sectionbartoggle" tabindex="0">
+				<h1>
+					<small><i class="icon-chevron-down"></i><span>Products list</span></small>
+				</h1>
+			</div>
+			<div class="row linestoggle anything">
+				<input type="hidden" id="dupplicateClientAnalysis" value="This price line analysis code is already attached or overlapped with valid from/to date"> <input type="hidden" id="prcingValidFromTo" value="Valid from and valid to, should both have date or both empty">
 				<div class="span12">
-					<table class="table-condensed table table-striped datatabled" id="testmodaltable">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Price</th>
-								<th>Available Qty</th>
-								<th>Date</th>
-								<th><button data-target="#testmodaltablerownew" id="testmodaltablerownewbutton" class="btn btn-mini-icon pull-right include" data-toggle="modal">
-										<i class="icon-plus"></i>
-									</button></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr id="testmodaltablerow1">
-								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
-								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
-								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
-								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
-								<td><span><span id="testmodaltablerow1firstname">Joe</span> <span id="testmodaltablerow1surname">Bloggs</span></span></td>
-							</tr>
-						</tbody>
-					</table>
+					<form>
+						<div id="listProduct_wrapper" class="dataTables_wrapper form-inline">
+							<table class="table-condensed table table-striped datatabled" id="dataTable">
+								<thead>
+									<tr>
+										<th>Sl.</th>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Available qty</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</form>
 				</div>
 			</div>
-		</form>
+		</section>
 	</div>
 
-	<span th:substituteby="commons :: common-html"></span>
-	<span th:substituteby="commons :: common-js"></span>
+
+	<span th:replace="commons :: common-html"></span>
+	<span th:replace="commons :: common-js"></span>
+
+	<footer class="text-center">
+		<small><span>Powered by</span> <a href="http://metafour.com/" target="_">Metafour Ltd</a>. © Copyright <span>2019</span></small>
+	</footer>
 </body>
 </html>

@@ -11,6 +11,7 @@ m4.ui.input = m4.ui.input || {};
  * Fill up search suggest input box with description of object code (id).
  */
 m4.ui.search.fillDescription = function() {
+	dataTable();
 	var ob = $(this), obval = ob.val(), val = ob.siblings(".typeahead-val").val(), desc = ob.siblings(".typeahead-desc").val();
 	if (val.length > 0 && (obval !== "" && obval === desc) === false) {
 		var dependentfields = ob.attr("data-search-dependentfields");
@@ -98,15 +99,17 @@ m4.ui.unblock = function(target) {
 
 /**
  * Default mainpage submit fucntion for this project.<br>
- * If you required you can still write event handler for event 
- * mainpagesubmitpre and do operatons for a specific page
+ * If you required you can still write event handler for event mainpagesubmitpre
+ * and do operatons for a specific page
  * 
- * @param e Event reference
- * @param submitconfig JSON array of submit related datas
+ * @param e
+ *            Event reference
+ * @param submitconfig
+ *            JSON array of submit related datas
  * @returns {Boolean} Either true or false
  */
 m4.mainpagesubmitdefault = function(e, submitconfig) {
-
+	
 	submitconfig.data = $('form#mainform').serialize();
 	submitconfig.success = m4.mainpagesubmitsuccess;
 	submitconfig.error = m4.mainpagesubmiterror;
@@ -127,6 +130,7 @@ m4.mainpagesubmitdefault = function(e, submitconfig) {
  * @param jqXHR
  */
 m4.mainpagesubmitsuccess = function(data, textStatus, jqXHR) {
+	dataTable();
 	if (typeof data.redirect !== 'string') {
 		m4.ui.unblock();
 		$("input.error").removeClass("error");
@@ -177,4 +181,28 @@ function overrideDuringSubmitStuffDone(target) {
 // We don't need escaping
 function escapeHtml(string) {
 	return string;
+}
+
+//Table
+function dataTable() {
+	console.log('its ok' + $('#baseUrl').attr('href')
+			+ "inventory/findProducts")
+	$.ajax({
+		type : "GET",
+		url : $('#baseUrl').attr('href') + "product/findProducts",
+		success : function(obj) {
+			var productTable = $('#dataTable').DataTable();
+			productTable.clear().draw();
+
+			$.each(obj, function(i, product) {
+				console.log({product});
+				productTable.row.add(
+						[ ++i, product.name, product.price,
+							product.quantity, product.date]).draw();
+			});
+		},
+		error : function(e) {
+			console.log('ERROR: ', e);
+		}
+	});
 }
