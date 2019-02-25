@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,22 +20,15 @@ import com.metafour.model.Product;
 import com.metafour.services.ProductService;
 
 @Controller
-//@RequestMapping("/")
+@RequestMapping("/product")
 public class ProductController {
 
 	@Autowired
 	ProductService productService;
 
-	@GetMapping("/product")
-	//@ResponseBody
+	@RequestMapping
 	public String productScreen(final ModelMap model) throws MetafourStarterException {
 		return updateScreen(null, model);
-	}
-
-	@GetMapping("/order")
-	//@ResponseBody
-	public String productScreen() {
-		return "order";
 	}
 
 	@RequestMapping("/{id}")
@@ -46,7 +38,7 @@ public class ProductController {
 		return "products";
 	}
 
-	@RequestMapping(value = "/product", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> addNewProduct(@Valid Product product, BindingResult binding, final ModelMap model)
 			throws MetafourStarterException, BindException {
