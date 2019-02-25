@@ -11,7 +11,7 @@ m4.ui.input = m4.ui.input || {};
  * Fill up search suggest input box with description of object code (id).
  */
 m4.ui.search.fillDescription = function() {
-	dataTable();
+	// dataTable();
 	var ob = $(this), obval = ob.val(), val = ob.siblings(".typeahead-val").val(), desc = ob.siblings(".typeahead-desc").val();
 	if (val.length > 0 && (obval !== "" && obval === desc) === false) {
 		var dependentfields = ob.attr("data-search-dependentfields");
@@ -130,7 +130,7 @@ m4.mainpagesubmitdefault = function(e, submitconfig) {
  * @param jqXHR
  */
 m4.mainpagesubmitsuccess = function(data, textStatus, jqXHR) {
-	dataTable();
+	// dataTable();
 	if (typeof data.redirect !== 'string') {
 		m4.ui.unblock();
 		$("input.error").removeClass("error");
@@ -149,18 +149,19 @@ m4.mainpagesubmiterror = function(jqXHR, textStatus, errorThrown) {
 	console.log("hello buddy");
 	try {
 		var jsonObject = $.parseJSON(jqXHR.responseText);
-		var errMsg = jsonObject.message + ".";
+		/* var errMsg = jsonObject.message + "."; */
 		if (jsonObject.hasOwnProperty("errors")) {
 			$.each(jsonObject.errors, function(idx, item){
-				if (idx === 0) {
-					errMsg += " Errors: ";
-				}
-				var field = $("[name='" + item.field + "']");
-				if (field && field.is(".typeahead-val")) field = field.siblings(".typeahead");
-				if (field) field.addClass("error");
-				errMsg += item.field + " = " + item.message + ", ";
+				showError(item.defaultMessage);
+				/*
+				 * if (idx === 0) { errMsg += " Errors: "; } var field =
+				 * $("[name='" + item.field + "']"); if (field &&
+				 * field.is(".typeahead-val")) field =
+				 * field.siblings(".typeahead"); if (field)
+				 * field.addClass("error"); errMsg +=item.defaultMessage;
+				 */
 			});
-			showError(errMsg);
+			// showError(errMsg);
 		}
 	} catch(e) {
 		console.log("Failed to parse error ===> " + e);
@@ -183,7 +184,7 @@ function escapeHtml(string) {
 	return string;
 }
 
-//Table
+// Table
 function dataTable() {
 	console.log('its ok' + $('#baseUrl').attr('href')
 			+ "inventory/findProducts")

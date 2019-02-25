@@ -1,6 +1,7 @@
 package com.metafour.controllers;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -20,38 +21,43 @@ import com.metafour.model.Product;
 import com.metafour.services.ProductService;
 
 @Controller
-@RequestMapping("/product")
+//@RequestMapping("/")
 public class ProductController {
-	
 
 	@Autowired
 	ProductService productService;
 
-	@RequestMapping
+	@GetMapping("/product")
+	//@ResponseBody
 	public String productScreen(final ModelMap model) throws MetafourStarterException {
-		System.out.println(productService.findProducts().toString());
 		return updateScreen(null, model);
+	}
+
+	@GetMapping("/order")
+	//@ResponseBody
+	public String productScreen() {
+		return "order";
 	}
 
 	@RequestMapping("/{id}")
 	public String updateScreen(@PathVariable String id, final ModelMap model) throws MetafourStarterException {
 		model.addAttribute("product", new Product());
+		model.addAttribute("productlist", productService.findProducts());
 		return "products";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Product> addNewProduct(@Valid Product product, BindingResult binding, final ModelMap model) throws MetafourStarterException, BindException {
+	public Map<String, String> addNewProduct(@Valid Product product, BindingResult binding, final ModelMap model)
+			throws MetafourStarterException, BindException {
+		Map<String, String> result = new HashMap<>();
 		if (binding.hasErrors())
 			throw new BindException(binding);
-		
-		model.addAttribute("product", new Product());
-		return productService.addProduct(product);
+
+		productService.addProduct(product);
+		result.put("status", "success");
+		result.put("redirect", "/");
+		return result;
 	}
-	
-	@GetMapping(value = "/findProducts")
-	@ResponseBody
-	public List<Product> findProducts() {
-		return productService.findProducts();
-	}
+
 }
