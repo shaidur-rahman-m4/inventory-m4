@@ -1,4 +1,4 @@
-package com.metafour.validation;
+package com.metafour.order.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -15,13 +15,14 @@ import javax.validation.Payload;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { com.metafour.validation.ValidNameImpl.class })
-public @interface ValidateName {
+@Constraint(validatedBy = { com.metafour.order.validation.ValidOrderQuantityImpl.class })
+public @interface ValidateOrderQuantity {
 
-	String message() default "Name can't be empty";
+	String message() default "Quantity must be greater than 0";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
+	int min() default 1;
 }

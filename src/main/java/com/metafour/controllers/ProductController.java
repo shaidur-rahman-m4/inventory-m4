@@ -1,6 +1,7 @@
 package com.metafour.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,4 +54,9 @@ public class ProductController {
 		return result;
 	}
 
+	@GetMapping("/findProducts")
+	@ResponseBody
+	public List<Product> findProducts() {
+		return productService.findProducts();
+	}
 }

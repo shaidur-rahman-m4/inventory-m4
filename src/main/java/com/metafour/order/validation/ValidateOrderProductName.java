@@ -1,4 +1,4 @@
-package com.metafour.validation;
+package com.metafour.order.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -15,10 +15,10 @@ import javax.validation.Payload;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { com.metafour.validation.ValidPriceImpl.class })
-public @interface ValidatePrice {
+@Constraint(validatedBy = { com.metafour.order.validation.ValidOrderProductNameImpl.class })
+public @interface ValidateOrderProductName {
 
-	String message() default "Price can't be contained null or less than 1";
+	String message() default "Please select product name";
 
 	Class<?>[] groups() default {};
 

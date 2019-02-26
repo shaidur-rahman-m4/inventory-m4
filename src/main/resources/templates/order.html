@@ -17,7 +17,7 @@
 				<div class="nav-collapse collapse">
 					<p class="navbar-text span2">Feedback message</p>
 					<ul class="nav pull-right">
-						<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
+						<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.cart}">Create</a></li>
 					</ul>
 					<ul class="nav pull-right">
 						<li><a class="editmode" id="addbutton" th:text="#{action.add}">Add</a></li>
@@ -41,7 +41,7 @@
 				</ul>
 			</div>
 		</header>
-		<form id="mainform" class="form-horizontal" autocomplete="off">
+		<form id="mainform" class="form-horizontal" autocomplete="off" th:object="${order}" th:action="@{/order/addOrder}">
 			<section id="newOrder">
 				<div class="page-header sectionbartoggle" tabindex="0">
 					<h1>
@@ -54,16 +54,17 @@
 							<div class="control-group">
 								<label for="groupofradios" class="control-label" th:text="#{order.type}">Order type:</label>
 								<div class="controls">
-									<label class="radio"> <input type="radio" id="groupofradiosradio1" name="groupofradios" class="include" /> Sale
-									</label> <label class="radio"> <input type="radio" id="groupofradiosradio2" name="groupofradios" class="include" /> Purchase
+									<label class="radio"> <input type="radio" id="type1" name="type" th:field="*{type}" value="sale" class="include" /> Sale
+									</label> <label class="radio"> <input type="radio" id="type2" name="type" th:field="*{type}" value="purchase" class="include" /> Purchase
 									</label>
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="price" class="control-label" th:text="#{order.product.name}">Product:</label>
+								<label for="productOr" class="control-label" th:text="#{order.product.name}">Product:</label>
 								<div class="controls">
-									<select id="select" name="select" class="input-large include">
-										<option th:each="products : ${productlist}" th:value="${products.name}" th:text="${products.name}"></option>
+									<select id="productOr" name="name" class="input-large include">
+										<option value>Select product</option>
+										<option th:each="products : ${productlist}" th:field="*{name}" th:value="${products.name}" th:text="${products.name}"></option>
 									</select>
 								</div>
 							</div>
@@ -74,14 +75,14 @@
 							<div class="control-group">
 								<label for="qty" class="control-label" th:text="#{order.qty}">Text input:</label>
 								<div class="controls">
-									<input id="qty" name="quantity" type="number" class="input-large include" required="required" placeholder="Quantity" />
+									<input id="qtyOr" name="quantity" type="number" th:field="*{quantity}" class="input-large include" required="required" value="" placeholder="Quantity" />
 								</div>
 							</div>
 							<div class="control-group">
 								<label for="price" class="control-label" th:text="#{order.price}">Price:</label>
 								<div class="controls">
 									<div class="input-append">
-										<input id="price" name="price"  type="text" class="input-large include" readonly /> <span class="inlineappends"></span>
+										<input id="priceOr" name="price" type="text" th:field="*{price}" class="input-large include" readonly /> <span class="inlineappends"></span>
 									</div>
 								</div>
 							</div>
@@ -89,7 +90,7 @@
 								<label for="totalPrice" class="control-label" th:text="#{order.price.total}">Price:</label>
 								<div class="controls">
 									<div class="input-append">
-										<input id="totalPrice" name="price"  type="text" class="input-large include" readonly /> <span class="inlineappends"></span>
+										<input id="totalPrice" name="price" type="text" th:field="*{totalPrice}" class="input-large include" readonly /> <span class="inlineappends"></span>
 									</div>
 								</div>
 							</div>
@@ -97,7 +98,6 @@
 					</div>
 				</div>
 			</section>
-
 		</form>
 		<section id="chartList" style="display: none;">
 			<div class="page-header sectionbartoggle" tabindex="0">
@@ -114,22 +114,27 @@
 								<thead>
 									<tr>
 										<th>Sl.</th>
-										<th>Name</th>
+										<th>Order type</th>
+										<th>Product name</th>
+										<th>Quantity</th>
 										<th>Price</th>
-										<th>Available qty</th>
-										<th>Date</th>
+										<th>Total price</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+									<tr th:each="order, i : ${orderlist}">
+										<td th:text="${i.count}"></td>
+										<td th:text="${order.type}"></td>
+										<td th:text="${order.name}"></td>
+										<td th:text="${order.quantity}"></td>
+										<td th:text="${order.price}"></td>
+										<td th:text="${order.totalPrice}"></td>
 									</tr>
 								</tbody>
 							</table>
+						</div>
+						<div align="right"  class="control-group">
+							<a id="submit" type="button" class="btn btn-success" th:href="@{/order/orders}" >Submit</a>
 						</div>
 					</form>
 				</div>

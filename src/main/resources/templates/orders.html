@@ -1,0 +1,103 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Orders</title>
+<span th:replace="commons :: common-css"></span>
+</head>
+<body >
+	<a id="baseUrl" th:href="@{/}"></a>
+	<div id="headerbaredit" class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<span class="brand">Orders</span>
+				<div class="nav-collapse collapse">
+					<p class="navbar-text span2">Feedback message</p>
+					<ul class="nav pull-right" >
+						<!-- <li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
+					 --></ul>
+					<ul class="nav pull-right" >
+						<li><a class="editmode" id="addbutton" th:href="@{'/product'}" th:text="#{action.add}">Add</a></li>
+						<li><a class="editmode" id="updatebutton" th:text="#{action.update}">Update</a></li>
+						<li class="nodisplay"><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.save}">Save</a></li>
+						<li class="nodisplay"><a class="viewmode updatebutton" id="headercancelbutton" th:text="#{action.cancel}">Cancel</a></li>
+					</ul>
+					<form method="GET" action="" class="navbar-search pull-right">
+						<input type="text" autocomplete="off" placeholder="Search" class="typeahead search-query navbarsearch" data-search-settings="navbarsearch"> <input type="hidden" value="" class="typeahead-val">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="container" class="container">
+		<header id="overview" class="subhead">
+			<div class="subnav subnav-fixed" id="subnavscroll">
+				<ul class="nav nav-pills"><!-- 
+					<li class=""><a href="#addNewProduct">Add new product</a></li>
+					<li class=""><a href="#productsTable">Products list</a></li> -->
+				</ul>
+			</div>
+		</header>
+		<form id="mainform" class="form-horizontal" autocomplete="off">
+			<section id="order" th:each="order, i :${orders}">
+				<div class="page-header sectionbartoggle" tabindex="0">
+					<h1>
+						<small><i class="icon-chevron-down"></i><span th:text="'Order no:' +${i.count}">Order no:</span></small>
+					</h1>
+				</div>
+				<div class="row anything noheader">
+					<div class="span6">
+						<fieldset>
+							<div class="control-group">
+								<label for="type" class="control-label" th:text="#{order.type}">Text input:</label>
+								<div class="controls">
+									<input id="type" name="type" th:value="${order.type}" type="text" class="input-large include" required="required" placeholder="Type" readonly />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="name" class="control-label" th:text="#{order.product.name}">Text input:</label>
+								<div class="controls">
+									<input id="name" name="name" th:value="${order.name}" type="text" class="input-large include" required="required" placeholder="Name" readonly />
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="span6">
+						<fieldset>
+							<div class="control-group">
+								<label for="qty" class="control-label" th:text="#{order.qty}">Text input:</label>
+								<div class="controls">
+									<input id="qty" name="qty" th:value="${order.quantity}" type="number" class="input-large include" required="required" placeholder="Quantity" readonly />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="price" class="control-label" th:text="#{order.price}">Text input:</label>
+								<div class="controls">
+									<input id="price" name="price" th:value="${order.price}" type="number" class="input-large include" required="required" placeholder="Price" readonly />
+								</div>
+							</div>
+							<div class="control-group">
+								<label for="tprice" class="control-label" th:text="#{order.price.total}">Text input:</label>
+								<div class="controls">
+									<input id="tprice" name="tprice" th:value="${order.totalPrice}" type="number" class="input-large include" required="required" placeholder="Total Price" readonly />
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</section>
+		</form>
+	</div>
+
+
+	<span th:replace="commons :: common-html"></span>
+	<span th:replace="commons :: common-js"></span>
+
+	<footer class="text-center">
+		<small><span>Powered by</span> <a href="http://metafour.com/" target="_">Metafour Ltd</a>. © Copyright <span>2019</span></small>
+	</footer>
+</body>
+</html>

@@ -184,22 +184,24 @@ function escapeHtml(string) {
 	return string;
 }
 
-// Table
-function dataTable() {
-	console.log('its ok' + $('#baseUrl').attr('href')
-			+ "inventory/findProducts")
-	$.ajax({
+//Total price calculation
+m4.totalPrice=function(){
+	$('#totalPrice').val($('#priceOr').val() * $('#qtyOr').val());
+};
+
+
+
+// find product price by name
+function findPrice() {
+		$.ajax({
 		type : "GET",
 		url : $('#baseUrl').attr('href') + "product/findProducts",
 		success : function(obj) {
-			var productTable = $('#dataTable').DataTable();
-			productTable.clear().draw();
-
-			$.each(obj, function(i, product) {
-				console.log({product});
-				productTable.row.add(
-						[ ++i, product.name, product.price,
-							product.quantity, product.date]).draw();
+				$.each(obj, function(i, product) {
+				if(product.name==$('select').children("option:selected").val()){
+					$('#priceOr').val(product.price);
+					$(m4.totalPrice);
+				}
 			});
 		},
 		error : function(e) {
@@ -207,3 +209,4 @@ function dataTable() {
 		}
 	});
 }
+

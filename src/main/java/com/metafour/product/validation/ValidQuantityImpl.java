@@ -1,4 +1,4 @@
-package com.metafour.validation;
+package com.metafour.product.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

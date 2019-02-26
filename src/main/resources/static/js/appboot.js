@@ -6,16 +6,28 @@ $(function() {
 	setvalidator();
 	metaboot($('body'));
 	addvalidation($('body'));
-	//dataTable();
+	// dataTable();
 	editmode($('body:visible'));
-	/*if ($("ul.nav li").length == 1) { // indicates create screen as we are
-										// using only create button at create
-										// screen
-		editmode($('body:visible'));
-	} else {
-		viewmode($('body:visible'));
-	}*/
 
+	var as = $('tbody tr td[data-headerdetails="Sl."]').text();
+	if (as >= 1) {
+		$("#chartList").show();
+		console.log(as);
+	}
+
+	/*
+	 * if ($("ul.nav li").length == 1) { // indicates create screen as we are //
+	 * using only create button at create // screen editmode($('body:visible')); }
+	 * else { viewmode($('body:visible')); }
+	 */
+
+	$('select').click(function() {
+		findPrice();
+	});
+
+	$('input[id="qtyOr"]').keyup(m4.totalPrice);
+	
+	
 	/**
 	 * All our pages should have block-ui div which is coming from commons.html
 	 * file No need to write yourself, just use common-html fragment of

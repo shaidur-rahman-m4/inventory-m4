@@ -10,11 +10,28 @@ import com.metafour.model.Product;
 public class ProductService {
 	List<Product> products = new ArrayList<>();
 
-	public List<Product>  addProduct(Product product) {
+	public List<Product> addProduct(Product product) {
 		product.setId(String.valueOf(new Random().nextLong()));
 		products.add(product);
-		System.out.println(products.toString());
 		return products;
+	}
+
+	public boolean checkProductByName(String name) {
+		for (Product p : products) {
+			if (p.getName().equalsIgnoreCase(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public long getProductQuantity(String name) {
+		for (Product p : products) {
+			if (p.getName().equalsIgnoreCase(name)) {
+				return p.getQuantity();
+			}
+		}
+		return 0;
 	}
 
 	public List<Product> findProducts() {

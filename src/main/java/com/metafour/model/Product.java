@@ -4,8 +4,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.metafour.validation.ValidatePrice;
-import com.metafour.validation.ValidateQuantity;
+import com.metafour.product.validation.ValidateName;
+import com.metafour.product.validation.ValidatePrice;
+import com.metafour.product.validation.ValidateQuantity;
 
 import lombok.Data;
 
@@ -13,7 +14,9 @@ import lombok.Data;
 public class Product {
 
 	private String id;
+	
 	@NotEmpty(message = "The name can't be empty")
+	@ValidateName
 	private String name;
 
 	@ValidatePrice
