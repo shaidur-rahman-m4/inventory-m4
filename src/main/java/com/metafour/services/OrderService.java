@@ -13,13 +13,16 @@ public class OrderService {
 	List<Order> orders = new ArrayList<>();
 	public String name;
 	public String type;
+	boolean flag;
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public void setType(String type) {
+		System.out.println("tyyyyype:"+type);
 		this.type = type;
+		System.out.println("tyythisssssss:"+this.type);
 	}
 
 	public void init() {
@@ -27,8 +30,18 @@ public class OrderService {
 	}
 
 	public List<Order> addOrder(Order order) {
-		order.setId(String.valueOf(new Random().nextLong()));
-		orders.add(order);
+		flag = false;
+		orders.forEach(ord -> {
+			if (ord.getName().equals(order.getName()) && ord.getType().equals(order.getType())) {
+				ord.setQuantity(ord.getQuantity() + order.getQuantity());
+				flag = true;
+			}
+		});
+		if (flag == false) {
+			order.setId(String.valueOf(new Random().nextLong()));
+			orders.add(order);
+			return orders;
+		}
 		return orders;
 	}
 

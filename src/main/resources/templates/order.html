@@ -128,7 +128,7 @@
 										<td th:text="${order.name}"></td>
 										<td align="right" th:text="${order.quantity}"></td>
 										<td align="right" th:text="${order.price}"></td>
-										<td align="right" th:text="${order.totalPrice}"></td>
+										<td align="right" th:text="${order.quantity}*${order.price}"></td>
 									</tr>
 								</tbody>
 							</table>
