@@ -75,7 +75,7 @@
 							<div class="control-group">
 								<label for="qty" class="control-label" th:text="#{order.qty}">Text input:</label>
 								<div class="controls">
-									<input id="qtyOr" name="quantity" type="number" th:field="*{quantity}" class="input-large include" required="required" value="" placeholder="Quantity" />
+									<input id="qtyOr" name="quantity" type="number" th:field="*{quantity}" class="input-large include" required="required" value="" placeholder="Quantity"/>
 								</div>
 							</div>
 							<div class="control-group">
@@ -116,9 +116,9 @@
 										<th>Sl.</th>
 										<th>Order type</th>
 										<th>Product name</th>
-										<th>Quantity</th>
-										<th>Price</th>
-										<th>Total price</th>
+										<th align="right">Quantity</th>
+										<th align="right">Price</th>
+										<th align="right">Total price</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -126,9 +126,9 @@
 										<td th:text="${i.count}"></td>
 										<td th:text="${order.type}"></td>
 										<td th:text="${order.name}"></td>
-										<td th:text="${order.quantity}"></td>
-										<td th:text="${order.price}"></td>
-										<td th:text="${order.totalPrice}"></td>
+										<td align="right" th:text="${order.quantity}"></td>
+										<td align="right" th:text="${order.price}"></td>
+										<td align="right" th:text="${order.totalPrice}"></td>
 									</tr>
 								</tbody>
 							</table>

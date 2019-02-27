@@ -15,16 +15,15 @@ import javax.validation.Payload;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { com.metafour.order.validation.ValidOrderQuantityImpl.class })
-public @interface ValidateOrderQuantity {
+@Constraint(validatedBy = { com.metafour.order.validation.ValidOrderQuantityMaxImpl.class })
+public @interface ValidateOrderQuantityMax {
 
-	String message() default "Quantity must be greater than 0";
+	String message() default "Product quantity not sufficient";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
 	int min() default 1;
-	
-	
+
 }

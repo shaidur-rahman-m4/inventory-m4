@@ -2,6 +2,7 @@ package com.metafour.model;
 
 import com.metafour.order.validation.ValidateOrderProductName;
 import com.metafour.order.validation.ValidateOrderQuantity;
+import com.metafour.order.validation.ValidateOrderQuantityMax;
 import com.metafour.order.validation.ValidateOrderType;
 
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Order {
 	private String name;
 
 	@ValidateOrderQuantity
+	//@ValidateOrderQuantityMax
 	private Long quantity;
 
 	private Long price;

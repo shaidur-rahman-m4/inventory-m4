@@ -13,8 +13,8 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.metafour.exeption.MetafourStarterException;
@@ -28,19 +28,19 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	@RequestMapping
+	@GetMapping
 	public String productScreen(final ModelMap model) throws MetafourStarterException {
 		return updateScreen(null, model);
 	}
 
-	@RequestMapping("/{id}")
+	@GetMapping("/{id}")
 	public String updateScreen(@PathVariable String id, final ModelMap model) throws MetafourStarterException {
 		model.addAttribute("product", new Product());
 		model.addAttribute("productlist", productService.findProducts());
 		return "products";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	@ResponseBody
 	public Map<String, String> addNewProduct(@Valid Product product, BindingResult binding, final ModelMap model)
 			throws MetafourStarterException, BindException {

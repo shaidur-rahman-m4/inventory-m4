@@ -25,13 +25,25 @@ public class ProductService {
 		return false;
 	}
 
-	public long getProductQuantity(String name) {
+	public long getQuantityByName(String name) {
 		for (Product p : products) {
 			if (p.getName().equalsIgnoreCase(name)) {
 				return p.getQuantity();
 			}
 		}
 		return 0;
+	}
+
+	public void updateQuantity(String type, String name, Long qty) {
+		products.forEach(product -> {
+			if (product.getName().equalsIgnoreCase(name)) {
+				if (type.equalsIgnoreCase("sale")) {
+					product.setQuantity(product.getQuantity() - qty);
+				} else {
+					product.setQuantity(product.getQuantity() + qty);
+				}
+			}
+		});
 	}
 
 	public List<Product> findProducts() {

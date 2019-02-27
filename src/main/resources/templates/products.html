@@ -104,8 +104,8 @@
 									<tr>
 										<th>Sl.</th>
 										<th>Name</th>
-										<th>Price</th>
-										<th>Available qty</th>
+										<th align="right">Price</th>
+										<th align="right">Available qty</th>
 										<th>Date</th>
 									</tr>
 								</thead>
@@ -113,8 +113,8 @@
 									<tr th:each="products ,i : ${productlist}">
 										<td th:text="${i.count}"></td>
 										<td th:text="${products.name}"></td>
-										<td th:text="${products.price}"></td>
-										<td th:text="${products.quantity}"></td>
+										<td align="right" th:text="${products.price}"></td>
+										<td align="right" th:text="${products.quantity}"></td>
 										<td th:text="${products.date}"></td>
 									</tr>
 								</tbody>
