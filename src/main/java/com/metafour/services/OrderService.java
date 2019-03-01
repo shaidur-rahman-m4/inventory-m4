@@ -17,12 +17,12 @@ public class OrderService {
 
 	public void setName(String name) {
 		this.name = name;
+		System.out.println("name setting ok:"+this.name);
 	}
 
 	public void setType(String type) {
-		System.out.println("tyyyyype:"+type);
 		this.type = type;
-		System.out.println("tyythisssssss:"+this.type);
+		System.out.println("type setting ok:"+this.type);
 	}
 
 	public void init() {

@@ -12,7 +12,6 @@ $(function() {
 	var as = $('tbody tr td[data-headerdetails="Sl."]').text();
 	if (as >= 1) {
 		$("#chartList").show();
-		console.log(as);
 	}
 
 	/*

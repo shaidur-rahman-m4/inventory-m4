@@ -1,5 +1,6 @@
 /* Check and initialize global namespace objects, if not ready */
 /** Empower Office top-level namespace */
+var quant;
 var m4 = m4 || {};
 /** Empower Office UI namespace */
 m4.ui = m4.ui || {};
@@ -109,7 +110,6 @@ m4.ui.unblock = function(target) {
  * @returns {Boolean} Either true or false
  */
 m4.mainpagesubmitdefault = function(e, submitconfig) {
-	
 	submitconfig.data = $('form#mainform').serialize();
 	submitconfig.success = m4.mainpagesubmitsuccess;
 	submitconfig.error = m4.mainpagesubmiterror;
@@ -120,6 +120,7 @@ m4.mainpagesubmitdefault = function(e, submitconfig) {
 	if (preev.isDefaultPrevented()) return false;
 
 	m4.ui.block();
+	
 };
 
 /**
@@ -200,6 +201,7 @@ function findPrice() {
 				$.each(obj, function(i, product) {
 				if(product.name==$('select').children("option:selected").val()){
 					$('#priceOr').val(product.price);
+					quant=product.quantity;
 					$(m4.totalPrice);
 				}
 			});
@@ -209,4 +211,3 @@ function findPrice() {
 		}
 	});
 }
-

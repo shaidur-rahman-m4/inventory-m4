@@ -12,7 +12,6 @@ public class Order {
 	private String id;
 
 	@ValidateOrderType
-	//@Priority(value = 0)
 	private String type;
 
 	@ValidateOrderProductName

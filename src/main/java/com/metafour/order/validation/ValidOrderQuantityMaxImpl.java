@@ -24,12 +24,14 @@ public class ValidOrderQuantityMaxImpl implements ConstraintValidator<ValidateOr
 
 	@Override
 	public boolean isValid(Long qty, ConstraintValidatorContext context) {
-		if (qty > productService.getQuantityByName(orderService.name)) {
+
+		if (("sale").equals(orderService.type) && qty > productService.getQuantityByName(orderService.name)) {
 			System.out.println("qty false :  " + orderService.type);
 			return false;
 		}
 
-		System.out.println("qty true :  " + orderService.type);
+		System.out.println("qty type from true :  " + orderService.type);
+		System.out.println("qty name from true:  " + orderService.name);
 		return true;
 	}
 

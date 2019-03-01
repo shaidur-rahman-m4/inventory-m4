@@ -18,6 +18,8 @@
 					<p class="navbar-text span2">Feedback message</p>
 					<ul class="nav pull-right" th:if="${isNew}">
 						<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
+						<li class="divider-vertical"></li>
+						<li><a class="viewmode" id="orderPage" th:href="@{/order}">Order</a></li>
 					</ul>
 					<ul class="nav pull-right" th:unless="${isNew}">
 						<li><a class="editmode" id="addbutton" th:href="@{'/product'}" th:text="#{action.add}">Add</a></li>
